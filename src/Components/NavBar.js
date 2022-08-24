@@ -9,7 +9,6 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -31,8 +30,8 @@ export default function NavBar(props: Props) {
   let isLoggedIn = props.isLoggedIn;
   let setIsLoggedIn = props.setIsLoggedIn;
   const navItems = isLoggedIn
-    ? ["Github", "Home", "All Players", "Teams", "Logout"]
-    : ["Github", "Home", "All Players", "Teams", "Login"];
+    ? ["Github", "Players", "Teams", "Logout"]
+    : ["Github", "Players", "Teams", "Login"];
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -43,17 +42,29 @@ export default function NavBar(props: Props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Link to="/">
-        <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h6" sx={{ my: 2 }}>
+        <Link to="/" style={{ textDecoration: "inherit", color: "inherit" }}>
           FIFA KBE
-        </Typography>
-      </Link>
+        </Link>
+      </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }} href={item}>
-              <ListItemText primary={item} />
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <Link
+                key={item}
+                to={item}
+                style={{ textDecoration: "inherit", color: "inherit" }}
+              >
+                <Button color="inherit" style={{ textDecoration: "inherit" }}>
+                  {item === "Logout" ? (
+                    <div onClick={() => setIsLoggedIn(false)}>{item}</div>
+                  ) : (
+                    item
+                  )}
+                </Button>
+              </Link>{" "}
             </ListItemButton>
           </ListItem>
         ))}
@@ -86,7 +97,7 @@ export default function NavBar(props: Props) {
               to="/"
               style={{ textDecoration: "inherit", color: "inherit" }}
             >
-              FIFA KBE{" "}
+              FIFA KBE
             </Link>
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
@@ -128,9 +139,8 @@ export default function NavBar(props: Props) {
           {drawer}
         </Drawer>
       </Box>
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-      </Box>
+      <Box component="main" sx={{ p: 3 }}></Box>
+      <Toolbar />
     </Box>
   );
 }
