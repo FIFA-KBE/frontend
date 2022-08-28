@@ -2,11 +2,10 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Fragment } from "react";
 
-function PlayerCard({ playerName, position, rating }) {
+function PlayerCard({ playerName, position, rating, imageURL }) {
   return (
     <Fragment>
       <Card sx={{ maxWidth: 250 }} style={{ backgroundColor: "#2196f3" }}>
@@ -14,7 +13,7 @@ function PlayerCard({ playerName, position, rating }) {
           component="img"
           alt="green iguana"
           height="210"
-          image="https://futhead.cursecdn.com/static/img/22/players/158023.png"
+          image={imageURL}
         />
         <CardContent
           style={{

@@ -5,6 +5,8 @@ import NavBar from "../Components/NavBar";
 import { useState } from "react";
 import Github from "../pages/Github";
 import Players from "../pages/Players";
+import Teams from "../pages/Teams";
+import Team from "../pages/Team";
 
 function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,8 +23,9 @@ function Router() {
         />
         <Route path="/logout" element={<Home />} />
         <Route path="/github" element={<Github />} />
-        <Route path="/teams" element={<Home />} />
+        <Route path="/teams" element={<Teams />} />
         <Route path="/players" element={<Players />} />
+        <Route path="/team/new" element={<Team team={false} />} />
       </Routes>
     </BrowserRouter>
   );

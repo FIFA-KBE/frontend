@@ -1,9 +1,11 @@
 import React from "react";
+import Home from "./Home";
 
-const Github = () => {
+function Github() {
   React.useEffect(() => {
-    window.location.replace("https://github.com/FIFA-KBE");
+    window.open("https://github.com/FIFA-KBE", "_blank");
   }, []);
-};
+  return <Home />;
+}
 
 export default Github;
