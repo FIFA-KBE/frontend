@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import fut_22_players from "../resources/fut_22_players.json";
 import { Grid } from "@mui/material";
 import PlayerCard from "./PlayerCard";
+import Axios from "axios";
 
 function PlayerCards({ position }) {
-  console.log(position);
+  const [players, setPlayers] = React.useState([]);
   const playersToBeShown = position
-    ? fut_22_players.reduce((playersList, player) => {
+    ? players.reduce((playersList, player) => {
         if (player.position !== position) {
           return playersList;
         }
         playersList.push(player);
         return playersList;
       }, [])
-    : fut_22_players;
+    : players;
 
   console.log(playersToBeShown);
+useEffect(() => {
+    Axios.get("http://localhost:6003/players").then((response) => {
+      setPlayers(response.data);
+    });
+  }, []);
 
   return (
     <Grid
@@ -23,15 +29,13 @@ function PlayerCards({ position }) {
       spacing={{ xs: 1, md: 3 }}
       columns={{ xs: 3, sm: 6, md: 12 }}
     >
-      {playersToBeShown.map((item, index) => (
+      {playersToBeShown.map((player, index) => (
         <Grid item xs={1} sm={3} md={3} key={index} align="center">
           <PlayerCard
-            playerName={item.player_name}
-            position={item.position}
-            rating={item.overall}
-            imageURL={
-              "https://futhead.cursecdn.com/static/img/22/players/20801.png"
-            }
+            playerName={player.name}
+            position={player.position}
+            rating={player.rating}
+            imageURL={player.imageURL}
           />
         </Grid>
       ))}
