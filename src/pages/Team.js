@@ -19,7 +19,7 @@ function Team({ team }) {
           variant={"h3"}
           style={{ color: "#2196f3" }}
         >
-          {team ? "Viewing the " + team.name + " team" : "Creating a new team"}
+          {!team ? "Viewing the " + team.name + " team" : "Creating a new team"}
         </Typography>
         <Box
           component="img"

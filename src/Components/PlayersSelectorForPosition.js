@@ -37,7 +37,7 @@ function PlayersSelectorForPosition() {
           <PlayerSelector position={"Defender"} />
         </Grid>
         <Grid item xs={12} md={12} textAlign={"center"}>
-          <PlayerSelector position={"Defender"} />
+          <PlayerSelector position={"Keeper"} />
         </Grid>
       </Grid>
     </div>

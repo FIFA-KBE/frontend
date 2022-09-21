@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import fut_22_players from "../resources/fut_22_players.json";
 import { Grid } from "@mui/material";
 import PlayerCard from "./PlayerCard";
 import Axios from "axios";
@@ -17,7 +16,7 @@ function PlayerCards({ position }) {
     : players;
 
   console.log(playersToBeShown);
-useEffect(() => {
+  useEffect(() => {
     Axios.get("http://localhost:6003/players").then((response) => {
       setPlayers(response.data);
     });

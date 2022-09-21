@@ -26,6 +26,7 @@ function Router() {
         <Route path="/teams" element={<Teams />} />
         <Route path="/players" element={<Players />} />
         <Route path="/team/new" element={<Team team={false} />} />
+        <Route path="/team/teamName" element={<Team team />} />
       </Routes>
     </BrowserRouter>
   );

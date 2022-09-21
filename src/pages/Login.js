@@ -4,14 +4,20 @@ import { Grid, Input } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
-
 function Login({ setIsLoggedIn }) {
   let login = () => {
     setIsLoggedIn(true);
   };
   return (
     <div>
-      <Grid container spacing={2}>
+      <Grid
+        container
+        spacing={2}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: "80vh" }}
+      >
         <Grid item xs={12}>
           <Typography variant="h4">Login</Typography>
         </Grid>
