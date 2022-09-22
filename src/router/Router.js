@@ -10,7 +10,6 @@ import Team from "../pages/Team";
 
 function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   return (
     <BrowserRouter>
       <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
@@ -26,7 +25,7 @@ function Router() {
         <Route path="/teams" element={<Teams />} />
         <Route path="/players" element={<Players />} />
         <Route path="/team/new" element={<Team team={false} />} />
-        <Route path="/team/teamName" element={<Team team />} />
+        <Route path="/team/:teamName" element={<Team team={false} />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,10 +1,15 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
 import Box from "@mui/material/Box";
+import { useLocation } from "react-router-dom";
 import stadium from "../resources/stadium.png";
 import PlayersSelectorForPosition from "../Components/PlayersSelectorForPosition";
 
 function Team({ team }) {
+  const location = useLocation();
+  const teamName = location.state?.team.teamName;
+  const playerList = location.state?.team.playerList;
+  console.log(teamName);
   return (
     <div>
       <div
@@ -19,7 +24,9 @@ function Team({ team }) {
           variant={"h3"}
           style={{ color: "#2196f3" }}
         >
-          {!team ? "Viewing the " + team.name + " team" : "Creating a new team"}
+          {teamName
+            ? "Viewing the " + teamName + " team"
+            : "Creating a new team"}
         </Typography>
         <Box
           component="img"

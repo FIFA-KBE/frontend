@@ -17,7 +17,7 @@ function PlayerCards({ position }) {
 
   console.log(playersToBeShown);
   useEffect(() => {
-    Axios.get("http://localhost:6003/players").then((response) => {
+    Axios.get("http://localhost:3003/players").then((response) => {
       setPlayers(response.data);
     });
   }, []);

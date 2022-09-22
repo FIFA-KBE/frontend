@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Axios from "axios";
 import {
   Grid,
   Card,
@@ -8,19 +10,41 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
+import PlayerCard from "./PlayerCard";
 
 function TeamCard({ team }) {
+  const [players, setPlayers] = useState([]);
+  useEffect(() => {
+    Axios.get("http://localhost:3003/players").then((response) => {
+      setPlayers(response.data);
+    });
+  }, []);
+  const playerOne = players.find((player) => player.name === team.playerOne);
+  const playerTwo = players.find((player) => player.name === team.playerTwo);
+  const playerThree = players.find(
+    (player) => player.name === team.playerThree
+  );
+  const playerFour = players.find((player) => player.name === team.playerFour);
+  const playerFive = players.find((player) => player.name === team.playerFive);
+  const playerSix = players.find((player) => player.name === team.playerSix);
+  const playerSeven = players.find(
+    (player) => player.name === team.playerSeven
+  );
+  const playerEight = players.find(
+    (player) => player.name === team.playerEight
+  );
+  const playerNine = players.find((player) => player.name === team.playerNine);
+  const playerTen = players.find((player) => player.name === team.playerTen);
+  const playerEleven = players.find(
+    (player) => player.name === team.playerEleven
+  );
   return (
-    <Grid
-      container
-      spacing={{ xs: 1, md: 3 }}
-      columns={{ xs: 3, sm: 6, md: 12 }}
-      direction="row"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Grid container direction="row" alignItems="center" justifyContent="center">
       <Grid item xs={6}>
-        <Card sx={{ maxWidth: 800 }} style={{ backgroundColor: "#2196f3" }}>
+        <Card
+          sx={{ maxWidth: 8000 }}
+          style={{ backgroundColor: "#2196f3", width: "fit-content" }}
+        >
           <CardContent
             style={{
               justifyContent: "center",
@@ -28,9 +52,22 @@ function TeamCard({ team }) {
               alignItems: "center",
             }}
           >
-            <Typography variant="h6" color="text.secondary">
-              {team.teamName}
-            </Typography>
+            <Grid item xs={10}>
+              <Typography
+                variant="h5"
+                component="div"
+                style={{ color: "white" }}
+              >
+                {team.teamName}
+              </Typography>
+            </Grid>
+            <Grid container xs={2} style={{ justifyContent: "end" }}>
+              <Link to={`/team/${team.teamName}`} state={{ team: team }}>
+                <Button variant={"contained"} align={"center"}>
+                  View Team
+                </Button>
+              </Link>
+            </Grid>
           </CardContent>
           <CardActions
             style={{
@@ -39,33 +76,110 @@ function TeamCard({ team }) {
               alignItems: "center",
             }}
           >
-            <Typography size="small">{team.playerOne}</Typography>
-            <Typography size="small">{team.playerTwo}</Typography>
-            <Typography size="small">{team.playerThree}</Typography>
-            <Typography size="small">{team.playerFour}</Typography>
-            <Typography size="small">{team.playerFive}</Typography>
-            <Typography size="small">{team.playerSix}</Typography>
-            <Typography size="small">{team.playerSeven}</Typography>
-            <Typography size="small">{team.playerEight}</Typography>
-            <Typography size="small">{team.playerNine}</Typography>
-            <Typography size="small">{team.playerTen}</Typography>
-            <Typography size="small">{team.playerEleven}</Typography>
+            {playerOne ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerOne.name}
+                  imageURL={playerOne.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
+            {playerTwo ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerTwo.name}
+                  imageURL={playerTwo.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
+            {playerThree ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerThree.name}
+                  imageURL={playerThree.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
+            {playerFour ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerFour.name}
+                  imageURL={playerFour.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
+            {playerFive ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerFive.name}
+                  imageURL={playerFive.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
+            {playerSix ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerSix.name}
+                  imageURL={playerSix.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
+            {playerSeven ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerSeven.name}
+                  imageURL={playerSeven.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
+            {playerEight ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerEight.name}
+                  imageURL={playerEight.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
+            {playerNine ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerNine.name}
+                  imageURL={playerNine.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
+            {playerTen ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerTen.name}
+                  imageURL={playerTen.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
+            {playerEleven ? (
+              <Typography size="small">
+                <PlayerCard
+                  playerName={playerEleven.name}
+                  imageURL={playerEleven.imageURL}
+                  inTeam={true}
+                />
+              </Typography>
+            ) : null}
           </CardActions>
         </Card>
-      </Grid>
-      <Grid item xs={1}>
-        <Link
-          to={{
-            pathname: `/team/${team.teamName}`,
-            state: { team },
-          }}
-        >
-          <Button variant={"contained"} align={"center"}>
-            View Team
-          </Button>
-        </Link>
       </Grid>
     </Grid>
   );
 }
+
 export default TeamCard;

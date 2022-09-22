@@ -5,14 +5,22 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Fragment } from "react";
 
-function PlayerCard({ playerName, position, rating, imageURL }) {
+function PlayerCard({ playerName, position, rating, imageURL, inTeam }) {
+  const imageHeight = inTeam ? 100 : 200;
   return (
     <Fragment>
-      <Card sx={{ maxWidth: 250 }} style={{ backgroundColor: "#2196f3" }}>
+      <Card
+        sx={{ maxWidth: 250 }}
+        style={
+          inTeam
+            ? { backgroundColor: "#2196f3", width: "85px" }
+            : { backgroundColor: "#2196f3" }
+        }
+      >
         <CardMedia
           component="img"
-          alt="green iguana"
-          height="210"
+          alt="football player"
+          height={imageHeight}
           image={imageURL}
         />
         <CardContent
@@ -22,8 +30,11 @@ function PlayerCard({ playerName, position, rating, imageURL }) {
             alignItems: "center",
           }}
         >
-          <Typography gutterBottom variant="h5" component="div"></Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            style={{ whiteSpace: "nowrap" }}
+          >
             {playerName}
           </Typography>
         </CardContent>
