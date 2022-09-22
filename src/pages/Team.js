@@ -8,8 +8,8 @@ import PlayersSelectorForPosition from "../Components/PlayersSelectorForPosition
 function Team({ team }) {
   const location = useLocation();
   const teamName = location.state?.team.teamName;
-  const playerList = location.state?.team.playerList;
-  console.log(teamName);
+  const teamFromState = location.state?.team;
+  console.log(teamFromState);
   return (
     <div>
       <div
@@ -41,7 +41,7 @@ function Team({ team }) {
           style={{ position: "absolute", marginTop: "26rem" }}
         />
         <div style={{ position: "absolute", marginTop: "50rem" }}>
-          <PlayersSelectorForPosition />
+          <PlayersSelectorForPosition team={teamFromState} />
         </div>
       </div>
     </div>

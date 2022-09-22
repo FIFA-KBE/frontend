@@ -62,7 +62,11 @@ function TeamCard({ team }) {
               </Typography>
             </Grid>
             <Grid container xs={2} style={{ justifyContent: "end" }}>
-              <Link to={`/team/${team.teamName}`} state={{ team: team }}>
+              <Link
+                to={`/team/${team.teamName}`}
+                state={{ team: team }}
+                style={{ textDecoration: "none" }}
+              >
                 <Button variant={"contained"} align={"center"}>
                   View Team
                 </Button>

@@ -19,37 +19,51 @@ function Teams() {
 
   return (
     <div>
-      <Typography align={"center"} variant={"h2"} style={{ color: "#2196f3" }}>
-        Teams
-      </Typography>
-
-      <Grid
-        container
-        spacing={2}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: "100vh" }}
+      <Typography
+        align={"center"}
+        variant={"h2"}
+        style={{ color: "#2196f3", fontWeight: "400" }}
       >
-        <Grid item xs={12}>
-          <Grid container spacing={1}>
-            {teams.map((team, index) => (
-              <Grid item xs={12} key={index} style={{ marginRight: "20%" }}>
-                <TeamCard team={team} />
-              </Grid>
-            ))}
+        TEAMS
+      </Typography>
+      <Grid container spacing={4}>
+        <Grid
+          item
+          container
+          spacing={2}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          style={{ minHeight: "100vh" }}
+        >
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
+              {teams.map((team, index) => (
+                <Grid item xs={12} key={index} style={{ marginRight: "20%" }}>
+                  <TeamCard team={team} />
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Link to={"/team/new"}>
-        <Button
-          variant={"contained"}
-          align={"center"}
-          style={{ marginTop: 20, marginLeft: "70%" }}
+        <Grid
+          item
+          container
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
         >
-          Create your dream Team
-        </Button>
-      </Link>
+          <Link to={"/team/new"} style={{ textDecoration: "none" }}>
+            <Button
+              variant={"contained"}
+              align={"center"}
+              style={{ width: "1200px", fontSize: "25px", fontWeight: "700" }}
+            >
+              Create your dream Team
+            </Button>
+          </Link>
+        </Grid>
+      </Grid>
     </div>
   );
 }
