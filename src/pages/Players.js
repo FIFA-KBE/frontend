@@ -3,7 +3,7 @@ import { Typography } from "@material-ui/core";
 import fut_22_players from "../resources/fut_22_players.json";
 import PlayerCards from "../Components/PlayerCards";
 
-function Players({ position }) {
+function Players({ position, selectedPlayer, setSelectedPlayer }) {
   console.log(fut_22_players);
 
   return (
@@ -12,7 +12,11 @@ function Players({ position }) {
         Players
       </Typography>
 
-      <PlayerCards position={position} />
+      <PlayerCards
+        position={position}
+        selectedPlayer={selectedPlayer}
+        setSelectedPlayer={setSelectedPlayer}
+      />
     </>
   );
 }

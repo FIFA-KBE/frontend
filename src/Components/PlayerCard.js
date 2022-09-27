@@ -5,11 +5,22 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Fragment } from "react";
 
-function PlayerCard({ playerName, position, rating, imageURL, inTeam }) {
+function PlayerCard({
+  playerName,
+  position,
+  rating,
+  imageURL,
+  player,
+  inTeam,
+  selectedPlayer,
+}) {
   const imageHeight = inTeam ? 100 : 200;
   return (
     <Fragment>
       <Card
+        elevation={
+          player && selectedPlayer && player === selectedPlayer ? 24 : 1
+        }
         sx={{ maxWidth: 250 }}
         style={
           inTeam
