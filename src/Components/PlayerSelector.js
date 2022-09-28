@@ -3,12 +3,11 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Players from "../pages/Players";
 
-export default function PlayerSelector({ position }) {
+export default function PlayerSelector({ position, buttonDisabled }) {
   const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -18,15 +17,17 @@ export default function PlayerSelector({ position }) {
   };
 
   const [selectedPlayer, setSelectedPlayer] = useState(null);
-  useEffect(() => {
-    console.log("this is the selected player", selectedPlayer);
-  }, [selectedPlayer]);
+
+  const savePlayer = () => {
+    setOpen(false);
+  };
   return (
     <div>
       <Button
         variant="contained"
         onClick={handleClickOpen}
         style={{ fontWeight: "bolder", fontSize: "30px" }}
+        disabled={buttonDisabled}
       >
         +
       </Button>
@@ -40,7 +41,7 @@ export default function PlayerSelector({ position }) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Add Player</Button>
+          <Button onClick={savePlayer}>Add Player</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -180,6 +180,23 @@ function TeamCard({ team }) {
               </Typography>
             ) : null}
           </CardActions>
+          <Grid
+            container
+            xs={2}
+            style={{ marginLeft: "56rem", marginBottom: "1rem" }}
+          >
+            <Button
+              variant={"contained"}
+              align={"center"}
+              style={{ backgroundColor: "red" }}
+              onClick={() => {
+                Axios.delete(`http://localhost:3003/teams/${team.id}`);
+                window.location.reload();
+              }}
+            >
+              Delete Team
+            </Button>
+          </Grid>
         </Card>
       </Grid>
     </Grid>

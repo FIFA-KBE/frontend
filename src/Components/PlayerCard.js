@@ -14,19 +14,31 @@ function PlayerCard({
   inTeam,
   selectedPlayer,
 }) {
+  const isSelected = player && selectedPlayer && player === selectedPlayer;
   const imageHeight = inTeam ? 100 : 200;
+  const styleForSelected = isSelected
+    ? {
+        backgroundColor: "#34cfeb",
+        border: "2px solid #2196f3",
+        borderRadius: "5px",
+      }
+    : { backgroundColor: "#" };
+  const styleForInTeam = inTeam
+    ? {
+        width: "85px",
+        backgroundColor: "#34cfeb",
+      }
+    : { backgroundColor: "#34cfeb" };
   return (
     <Fragment>
       <Card
-        elevation={
-          player && selectedPlayer && player === selectedPlayer ? 24 : 1
-        }
+        elevation={isSelected ? 24 : 1}
+        raised={player && selectedPlayer && player === selectedPlayer}
         sx={{ maxWidth: 250 }}
-        style={
-          inTeam
-            ? { backgroundColor: "#2196f3", width: "85px" }
-            : { backgroundColor: "#2196f3" }
-        }
+        style={{
+          ...styleForSelected,
+          ...styleForInTeam,
+        }}
       >
         <CardMedia
           component="img"

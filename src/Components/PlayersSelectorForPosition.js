@@ -5,11 +5,8 @@ import { Grid } from "@mui/material";
 import PlayerSelector from "./PlayerSelector";
 import PlayerCard from "./PlayerCard";
 
-function PlayersSelectorForPosition(team) {
-  const seeingATeam =
-    Object.keys(team).length === 0 || team.team === undefined ? false : true;
-  console.log(seeingATeam);
-  console.log(team);
+function PlayersSelectorForPosition({ team, buttonDisabled }) {
+  const seeingATeam = team === undefined ? false : true;
   const [players, setPlayers] = useState([]);
   useEffect(() => {
     Axios.get("http://localhost:3003/players").then((response) => {
@@ -17,37 +14,37 @@ function PlayersSelectorForPosition(team) {
     });
   }, []);
   const playerOne = seeingATeam
-    ? players.find((player) => player.name === team.team.playerOne)
+    ? players.find((player) => player.name === team.playerOne)
     : null;
   const playerTwo = seeingATeam
-    ? players.find((player) => player.name === team.team.playerTwo)
+    ? players.find((player) => player.name === team.playerTwo)
     : null;
   const playerThree = seeingATeam
-    ? players.find((player) => player.name === team.team.playerThree)
+    ? players.find((player) => player.name === team.playerThree)
     : null;
   const playerFour = seeingATeam
-    ? players.find((player) => player.name === team.team.playerFour)
+    ? players.find((player) => player.name === team.playerFour)
     : null;
   const playerFive = seeingATeam
-    ? players.find((player) => player.name === team.team.playerFive)
+    ? players.find((player) => player.name === team.playerFive)
     : null;
   const playerSix = seeingATeam
-    ? players.find((player) => player.name === team.team.playerSix)
+    ? players.find((player) => player.name === team.playerSix)
     : null;
   const playerSeven = seeingATeam
-    ? players.find((player) => player.name === team.team.playerSeven)
+    ? players.find((player) => player.name === team.playerSeven)
     : null;
   const playerEight = seeingATeam
-    ? players.find((player) => player.name === team.team.playerEight)
+    ? players.find((player) => player.name === team.playerEight)
     : null;
   const playerNine = seeingATeam
-    ? players.find((player) => player.name === team.team.playerNine)
+    ? players.find((player) => player.name === team.playerNine)
     : null;
   const playerTen = seeingATeam
-    ? players.find((player) => player.name === team.team.playerTen)
+    ? players.find((player) => player.name === team.playerTen)
     : null;
   const playerEleven = seeingATeam
-    ? players.find((player) => player.name === team.team.playerEleven)
+    ? players.find((player) => player.name === team.playerEleven)
     : null;
   return (
     <div>
@@ -196,37 +193,70 @@ function PlayersSelectorForPosition(team) {
       ) : (
         <Grid container rowSpacing={12}>
           <Grid item xs={4} md={4} textAlign={"center"}>
-            <PlayerSelector position={"Striker"} />
+            <PlayerSelector
+              position={"Striker"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
           <Grid item xs={4} md={4} textAlign={"center"}>
-            <PlayerSelector position={"Striker"} />
+            <PlayerSelector
+              position={"Striker"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
           <Grid item xs={4} md={4} textAlign={"center"}>
-            <PlayerSelector position={"Striker"} />
+            <PlayerSelector
+              position={"Striker"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
           <Grid item xs={4} md={4} textAlign={"center"}>
-            <PlayerSelector position={"Midfielder"} />
+            <PlayerSelector
+              position={"Midfielder"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
           <Grid item xs={4} md={4} textAlign={"center"}>
-            <PlayerSelector position={"Midfielder"} />
+            <PlayerSelector
+              position={"Midfielder"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
           <Grid item xs={4} md={4} textAlign={"center"}>
-            <PlayerSelector position={"Midfielder"} />
+            <PlayerSelector
+              position={"Midfielder"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
           <Grid item xs={3} md={3} textAlign={"center"}>
-            <PlayerSelector position={"Defender"} />
+            <PlayerSelector
+              position={"Defender"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
           <Grid item xs={3} md={3} textAlign={"center"}>
-            <PlayerSelector position={"Defender"} />
+            <PlayerSelector
+              position={"Defender"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
           <Grid item xs={3} md={3} textAlign={"center"}>
-            <PlayerSelector position={"Defender"} />
+            <PlayerSelector
+              position={"Defender"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
           <Grid item xs={3} md={3} textAlign={"center"}>
-            <PlayerSelector position={"Defender"} />
+            <PlayerSelector
+              position={"Defender"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
           <Grid item xs={12} md={12} textAlign={"center"}>
-            <PlayerSelector position={"Keeper"} />
+            <PlayerSelector
+              position={"Keeper"}
+              buttonDisabled={buttonDisabled}
+            />
           </Grid>
         </Grid>
       )}
