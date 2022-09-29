@@ -2,20 +2,21 @@ import { useState, useEffect } from "react";
 import { Typography, Grid } from "@material-ui/core";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 import axios from "axios";
 
 import TeamCard from "../Components/TeamCard";
 
 function Teams() {
   const [teams, setTeams] = useState([]);
-
+  const location = useLocation();
+  const currencyFromState = location.state?.currentCurrency;
   useEffect(() => {
     axios.get("http://localhost:3003/teams").then((response) => {
       setTeams(response.data);
     });
   }, []);
-
-  console.log(teams);
 
   return (
     <div>
@@ -40,7 +41,7 @@ function Teams() {
             <Grid container spacing={1}>
               {teams.map((team, index) => (
                 <Grid item xs={12} key={index} style={{ marginRight: "20%" }}>
-                  <TeamCard team={team} />
+                  <TeamCard team={team} currencyFromState={currencyFromState} />
                 </Grid>
               ))}
             </Grid>
@@ -53,7 +54,11 @@ function Teams() {
           alignItems="center"
           justifyContent="center"
         >
-          <Link to={"/team/new"} style={{ textDecoration: "none" }}>
+          <Link
+            to={"/team/new"}
+            style={{ textDecoration: "none" }}
+            state={{ currencyFromState: currencyFromState }}
+          >
             <Button
               variant={"contained"}
               align={"center"}

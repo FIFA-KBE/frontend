@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import PlayerCard from "./PlayerCard";
 
-function TeamCard({ team }) {
+function TeamCard({ team, currencyFromState }) {
   const [players, setPlayers] = useState([]);
   useEffect(() => {
     Axios.get("http://localhost:3003/players").then((response) => {
@@ -64,7 +64,7 @@ function TeamCard({ team }) {
             <Grid container xs={2} style={{ justifyContent: "end" }}>
               <Link
                 to={`/team/${team.teamName}`}
-                state={{ team: team }}
+                state={{ team: team, currencyFromState: currencyFromState }}
                 style={{ textDecoration: "none" }}
               >
                 <Button variant={"contained"} align={"center"}>

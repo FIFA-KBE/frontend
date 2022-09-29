@@ -15,13 +15,11 @@ function PlayerCards({ position, selectedPlayer, setSelectedPlayer }) {
       }, [])
     : players;
 
-  console.log(playersToBeShown);
   useEffect(() => {
     Axios.get("http://localhost:3003/players").then((response) => {
       setPlayers(response.data);
     });
   }, []);
-
   return (
     <Grid
       container

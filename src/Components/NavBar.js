@@ -13,19 +13,36 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { useKeycloak } from "@react-keycloak/web";
 
 const drawerWidth = 240;
 
 export default function NavBar(props) {
   let isLoggedIn = props.isLoggedIn;
   let setIsLoggedIn = props.setIsLoggedIn;
-  const navItems = isLoggedIn
-    ? ["Github", "Players", "Teams", "Logout"]
-    : ["Github", "Players", "Teams", "Login"];
+  let setSelectedCurrency = props.setSelectedCurrency;
 
+  const { keycloak, initialized } = useKeycloak();
+  console.log("keycloak", keycloak);
+  const navItems = keycloak.authenticated
+    ? ["Github", "Players", "Teams"]
+    : ["Github", "Players", "Teams"];
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [currentCurrency, setCurrentCurrency] = useState("EUR");
+  const handleCurrencyChange = (event) => {
+    setCurrentCurrency(event.target.value);
+    setSelectedCurrency(event.target.value);
+  };
 
+  React.useEffect(() => {
+    console.log("currentCurrency", currentCurrency);
+    setCurrentCurrency(currentCurrency);
+  }, [currentCurrency]);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -36,7 +53,26 @@ export default function NavBar(props) {
         <Link to="/" style={{ textDecoration: "inherit", color: "inherit" }}>
           FIFA KBE
         </Link>
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Currency</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={currentCurrency}
+              label="Currency"
+              onChange={handleCurrencyChange}
+            >
+              <MenuItem value={"EUR"}>Euro</MenuItem>
+              <MenuItem value={"USD"}>Dollar</MenuItem>
+              <MenuItem value={"BTC"}>Bitcoin</MenuItem>
+              <MenuItem value={"GBP"}>Pound</MenuItem>
+              <MenuItem value={"CHF"}>Swiss Franc</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
       </Typography>
+
       <Divider />
       <List>
         {navItems.map((item) => (
@@ -46,6 +82,7 @@ export default function NavBar(props) {
                 key={item}
                 to={item}
                 style={{ textDecoration: "inherit", color: "inherit" }}
+                state={{ currentCurrency: currentCurrency }}
               >
                 <Button color="inherit" style={{ textDecoration: "inherit" }}>
                   {item === "Logout" ? (
@@ -59,12 +96,20 @@ export default function NavBar(props) {
           </ListItem>
         ))}
       </List>
+      <button
+        type="button"
+        className="text-blue-800"
+        onClick={() => keycloak.init({ onLoad: "login-required" })}
+      >
+        Login
+      </button>
     </Box>
   );
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  console.log("test", window);
   return (
     <Box sx={{ display: "flex" }}>
       <AppBar component="nav">
@@ -81,7 +126,7 @@ export default function NavBar(props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "flex" } }}
           >
             <Link
               to="/"
@@ -89,13 +134,32 @@ export default function NavBar(props) {
             >
               FIFA KBE
             </Link>
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl>
+                <InputLabel id="demo-simple-select-label"></InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={currentCurrency}
+                  onChange={handleCurrencyChange}
+                >
+                  <MenuItem value={"EUR"}>Euro</MenuItem>
+                  <MenuItem value={"USD"}>Dollar</MenuItem>
+                  <MenuItem value={"BTC"}>Bitcoin</MenuItem>
+                  <MenuItem value={"GBP"}>Pound</MenuItem>
+                  <MenuItem value={"CHF"}>Swiss Franc</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
           </Typography>
+
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Link
                 key={item}
                 to={item}
                 style={{ textDecoration: "inherit", color: "inherit" }}
+                state={{ currentCurrency: currentCurrency }}
               >
                 <Button color="inherit" style={{ textDecoration: "inherit" }}>
                   {item === "Logout" ? (
@@ -107,6 +171,27 @@ export default function NavBar(props) {
               </Link>
             ))}
           </Box>
+          <div className="hover:text-gray-200">
+            {!keycloak.authenticated && (
+              <button
+                type="button"
+                className="text-blue-800"
+                onClick={() => keycloak.login()}
+              >
+                Login
+              </button>
+            )}
+
+            {!!keycloak.authenticated && (
+              <button
+                type="button"
+                className="text-blue-800"
+                onClick={() => keycloak.logout()}
+              >
+                Logout ({keycloak.tokenParsed.preferred_username})
+              </button>
+            )}
+          </div>
         </Toolbar>
       </AppBar>
       <Box component="nav">

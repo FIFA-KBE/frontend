@@ -5,17 +5,49 @@ import { useLocation } from "react-router-dom";
 import stadium from "../resources/stadium.png";
 import PlayersSelectorForPosition from "../Components/PlayersSelectorForPosition";
 import Axios from "axios";
+import axios from "axios";
 
-function Team({ team }) {
+function Team({ team, selectedCurrency }) {
   const location = useLocation();
-  const teamName = location.state?.team.teamName;
+  const teamName = location.state?.team?.teamName;
   const teamFromState = location.state?.team;
-  console.log("team punket?", teamFromState);
   const seeingATeam = teamFromState === undefined ? false : true;
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [textDisabled, setTextDisabled] = React.useState(false);
   const [teamNameInput, setTeamNameInput] = React.useState(teamName);
+  const [teamCount, setTeamCount] = React.useState(0);
+  const canCreateTeam = teamCount === 11;
+  const [totalValue, setTotalValue] = React.useState(0);
+  const [valueShown, setValueShown] = React.useState(0);
 
+  function currentCurrency(currencyFromState) {
+    switch (currencyFromState) {
+      case "USD":
+        return "$";
+      case "EUR":
+        return "€";
+      case "GBP":
+        return "£";
+      case "BTC":
+        return "₿";
+      case "CHF":
+        return "₣";
+      default:
+        return "€";
+    }
+  }
+  function currencyConverter(quantity) {
+    axios
+      .get(
+        `http://localhost:7081/currency-exchange/from/EUR/to/${selectedCurrency}/quantity/${quantity}`
+      )
+      .then((response) => {
+        setValueShown(response.data.totalCalculatedAmount);
+      });
+  }
+  if (teamName) currencyConverter(teamFromState.totalCost);
+  else currencyConverter(totalValue);
+  //Disable adding players if team doesnt have a name
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -33,6 +65,27 @@ function Team({ team }) {
           alignItems: "center",
         }}
       >
+        <Typography
+          variant="h4"
+          component="div"
+          style={{
+            color: "white",
+            marginTop: "20px",
+            marginRight: "80rem",
+            position: "absolute",
+            width: "max-content",
+          }}
+        >
+          {teamName
+            ? "Total Value: " +
+              valueShown +
+              " Mio. " +
+              currentCurrency(selectedCurrency)
+            : "Total Value: " +
+              valueShown +
+              " Mio. " +
+              currentCurrency(selectedCurrency)}
+        </Typography>
         <Typography
           align={"center"}
           variant={"h3"}
@@ -58,6 +111,9 @@ function Team({ team }) {
           <PlayersSelectorForPosition
             team={teamFromState}
             buttonDisabled={!buttonDisabled}
+            teamName={teamNameInput}
+            setTeamCount={setTeamCount}
+            setTotalValue={setTotalValue}
           />
         </div>
         {!seeingATeam ? (
@@ -72,7 +128,6 @@ function Team({ team }) {
             }}
             onChange={(e) => {
               setTeamNameInput(e.target.value);
-              console.log("teamNameInput", teamNameInput);
             }}
           />
         ) : null}
@@ -120,7 +175,10 @@ function Team({ team }) {
             variant="contained"
             color="primary"
             onClick={() => {
-              Axios.post(`http://localhost:3003/saveData`);
+              Axios.put(
+                `http://localhost:3003/teams/${teamNameInput}/${totalValue}`
+              );
+              Axios.post("http://localhost:3003/saveData");
               window.open("http://localhost:3000/teams", "_self");
             }}
             style={{
@@ -129,6 +187,7 @@ function Team({ team }) {
               marginLeft: "80rem",
               fontSize: "2rem",
             }}
+            disabled={!canCreateTeam}
           >
             Create the Team
           </Button>

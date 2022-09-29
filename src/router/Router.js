@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import keycloak from "../Keycloak";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import NavBar from "../Components/NavBar";
@@ -7,27 +9,37 @@ import Github from "../pages/Github";
 import Players from "../pages/Players";
 import Teams from "../pages/Teams";
 import Team from "../pages/Team";
+import PrivateRoute from "../helpers/PrivateRouter";
 
 function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
-    <BrowserRouter>
-      <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/login"
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
-        />
-        <Route path="/logout" element={<Home />} />
-        <Route path="/github" element={<Github />} />
-        <Route path="/teams" element={<Teams />} />
-        <Route path="/players" element={<Players />} />
-        <Route path="/team/new" element={<Team team={false} />} />
-        <Route path="/team/:teamName" element={<Team team={false} />} />
-      </Routes>
-    </BrowserRouter>
+    <ReactKeycloakProvider authClient={keycloak}>
+      <BrowserRouter>
+        <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          />
+          <Route path="/logout" element={<Home />} />
+          <Route path="/github" element={<Github />} />
+          <Route
+            path="/teams"
+            element={
+              <PrivateRoute>
+                <Teams />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/players" element={<Players />} />
+          <Route path="/team/new" element={<Team team={false} />} />
+          <Route path="/team/:teamName" element={<Team team={false} />} />
+        </Routes>
+      </BrowserRouter>
+    </ReactKeycloakProvider>
   );
 }
 export default Router;
