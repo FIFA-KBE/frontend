@@ -13,10 +13,15 @@ import PrivateRoute from "../helpers/PrivateRouter";
 
 function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState("EUR");
   return (
     <ReactKeycloakProvider authClient={keycloak}>
       <BrowserRouter>
-        <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <NavBar
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          setSelectedCurrency={setSelectedCurrency}
+        />
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Home />} />
@@ -35,8 +40,14 @@ function Router() {
             }
           />
           <Route path="/players" element={<Players />} />
-          <Route path="/team/new" element={<Team team={false} />} />
-          <Route path="/team/:teamName" element={<Team team={false} />} />
+          <Route
+            path="/team/new"
+            element={<Team team={false} selectedCurrency={selectedCurrency} />}
+          />
+          <Route
+            path="/team/:teamName"
+            element={<Team team={false} selectedCurrency={selectedCurrency} />}
+          />
         </Routes>
       </BrowserRouter>
     </ReactKeycloakProvider>
